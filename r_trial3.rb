@@ -1,6 +1,6 @@
-require 'rubygems'
+#require 'rubygems'
 require 'nokogiri'
-require 'open-uri'
+#require 'open-uri'
 require 'watir-webdriver'
 require 'headless'
 require 'csv'

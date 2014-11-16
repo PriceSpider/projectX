@@ -7,8 +7,8 @@ ORIGIN_S = '/fran'
 ORIGIN_L = 'frankfurt-am-main'
 DESTINATION_S = '/mela'
 DESTINATION_L = 'melbourne'
-DEP_DATE = '/141227'
-RET_DATE = '/150110/'
+DEP_DATE = '/'+ARGV[0]
+RET_DATE = '/'+ARGV[1]+'/'
 DEP_MONTH = 'dezember'
 DEP_YEAR = '-2014'
 RET_MONTH = 'januar'
@@ -33,16 +33,16 @@ page = Nokogiri::HTML.parse(browser.html)
 browser.close
 headless.destroy
 
-#prints cheapest 1-Stop price that appears in left column of website
+#prints cheapest 1-Stop price that appears in left column of website, i.e. [0]=direct, [1]=one-stop, [2]=two-stop
 price_oneStop = page.css("span[class='day-filters-label-price']")[1].text
 
 dt = Time.new
 dateTime = dt.inspect
 
-new_row = [[dateTime, price_oneStop]]
+new_row = [[dateTime, ARGV[0],ARGV[1],price_oneStop]]
 
 #append to row within existing csv file
-CSV.open('FRA_MEL.csv', 'ab') do |csv|
+CSV.open('FRA_MEL_trial.csv', 'ab') do |csv|
     new_row.each do |row|
         csv << row
     end
