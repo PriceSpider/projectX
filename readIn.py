@@ -18,17 +18,26 @@ def convert_date(d):
     month=d[2:4]
     day=d[4:6]
     return '20'+year+'-'+month+'-'+day
+  
+def convert_digit(d):
+  if d.find('.') != -1:
+    return d[:1]+d[2:]
+  else: return d
+
 
 for row in range(n_data):
   
   #!!!cutting off 6 letters is only necessary in old data!!!
   date_clean = df[0].as_matrix()[row][:-6]
+  price = df[3].as_matrix()[row][:-4]
+  price_clean = convert_digit(price)
   dep = df[1].as_matrix()[row]
   ret = df[2].as_matrix()[row]
+  
 
   dep_date =  convert_date(dep)
   ret_date =  convert_date(ret)
-  
+
   departure = np.datetime64(dep_date)
   return_ = np.datetime64(ret_date)
   query = np.datetime64(date_clean)
@@ -41,6 +50,7 @@ for row in range(n_data):
   df[0][row] = date_clean
   df[1][row] = dep_date
   df[2][row] = ret_date
+  df[3][row] = price_clean
   df[4][row] = delta1_r
   df[5][row] = delta2_r
  
